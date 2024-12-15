@@ -23,6 +23,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { useState } from "react";
 import Greet from "@/components/codevolution/Greet";
 import MultiStyleBox from "@/components/codevolution/MultiStyle";
+import Box from "@/components/codevolution/Box";
 const logo = require("../../assets/images/adaptive-icon.png");
 
 export default function HomeScreen() {
@@ -128,28 +129,26 @@ export default function HomeScreen() {
     //     }
     //   />
     // </View>
-    <View style={{ flex: 1, backgroundColor: "green", padding: 60 }}>
+    <View style={styles.container}>
       {/* <Greet name={"Bruce Bhai Banner"} /> */}
-      <MultiStyleBox name1={"Superman"} name2={"IronMan"} />
+      {/* <MultiStyleBox name1={"Superman"} name2={"IronMan"} /> */}
+      <Box style={{ backgroundColor: "#121212" }}>Box 1</Box>
+      <Box style={{ backgroundColor: "#5456f5" }}>Box 2</Box>
+      <Box style={{ backgroundColor: "#656" }}>Box 3</Box>
+      <Box style={{ backgroundColor: "#aaa666" }}>Box 4</Box>
+      <Box style={{ backgroundColor: "navy" }}>Box 5</Box>
+      <Box style={{ backgroundColor: "crimson" }}>Box 6</Box>
+      <Box style={{ backgroundColor: "#faa555" }}>Box 7</Box>
     </View>
   );
 }
 
-// const styles = StyleSheet.create({
-//   titleContainer: {
-//     flexDirection: "row",
-//     alignItems: "center",
-//     gap: 8,
-//   },
-//   stepContainer: {
-//     gap: 8,
-//     marginBottom: 8,
-//   },
-//   reactLogo: {
-//     height: 178,
-//     width: 290,
-//     bottom: 0,
-//     left: 0,
-//     position: "absolute",
-//   },
-// });
+const styles = StyleSheet.create({
+  container: {
+    // marginTop: 64,
+    borderWidth:6,
+    borderColor:"red",
+    flex:1,
+    flexDirection:"column-reverse"
+  },
+});
