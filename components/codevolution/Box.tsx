@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 
 export default function Box({ children, style }) {
   return (
@@ -8,17 +8,24 @@ export default function Box({ children, style }) {
   );
 }
 
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+
 // Flex controls 3 properties flexBasis, flexGrow and flexShrink
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   box: {
-    backgroundColor: "#fff",
+    backgroundColor: "lightblue",
     padding: 3,
-    flex: 1,
+    height: windowHeight > 500 ? "70%" : "90%",
+    width: windowWidth > 500 ? "60%" : "90%",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
   },
   text: {
-    fontSize: 20,
+    fontSize: windowHeight > 500 ? 45 : 85,
     fontWeight: "bold",
     textAlign: "center",
-    color: "white",
+    color: "crimson",
   },
 });

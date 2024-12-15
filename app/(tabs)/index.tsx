@@ -24,6 +24,7 @@ import { useState } from "react";
 import Greet from "@/components/codevolution/Greet";
 import MultiStyleBox from "@/components/codevolution/MultiStyle";
 import Box from "@/components/codevolution/Box";
+import DimensionsAPI from "@/components/codevolution/DimensionsAPI";
 const logo = require("../../assets/images/adaptive-icon.png");
 
 export default function HomeScreen() {
@@ -129,16 +130,19 @@ export default function HomeScreen() {
     //     }
     //   />
     // </View>
+    // <View style={styles.container}>
+    //   {/* <Greet name={"Bruce Bhai Banner"} /> */}
+    //   {/* <MultiStyleBox name1={"Superman"} name2={"IronMan"} /> */}
+    //   <Box style={{ backgroundColor: "#121212" }}>Box 1</Box>
+    //   <Box style={{ backgroundColor: "#5456f5" }}>Box 2</Box>
+    //   <Box style={{ backgroundColor: "#656" }}>Box 3</Box>
+    //   <Box style={{ backgroundColor: "#aaa666" }}>Box 4</Box>
+    //   <Box style={{ backgroundColor: "navy" }}>Box 5</Box>
+    //   <Box style={{ backgroundColor: "crimson" }}>Box 6</Box>
+    //   <Box style={{ backgroundColor: "#faa555" }}>Box 7</Box>
+    // </View>
     <View style={styles.container}>
-      {/* <Greet name={"Bruce Bhai Banner"} /> */}
-      {/* <MultiStyleBox name1={"Superman"} name2={"IronMan"} /> */}
-      <Box style={{ backgroundColor: "#121212" }}>Box 1</Box>
-      <Box style={{ backgroundColor: "#5456f5" }}>Box 2</Box>
-      <Box style={{ backgroundColor: "#656" }}>Box 3</Box>
-      <Box style={{ backgroundColor: "#aaa666" }}>Box 4</Box>
-      <Box style={{ backgroundColor: "navy" }}>Box 5</Box>
-      <Box style={{ backgroundColor: "crimson" }}>Box 6</Box>
-      <Box style={{ backgroundColor: "#faa555" }}>Box 7</Box>
+      <DimensionsAPI></DimensionsAPI>
     </View>
   );
 }
@@ -146,9 +150,11 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     // marginTop: 64,
-    borderWidth:6,
-    borderColor:"red",
-    flex:1,
-    flexDirection:"column-reverse"
+    // borderWidth: 6,
+    // borderColor: "red",
+    backgroundColor: "plum",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
