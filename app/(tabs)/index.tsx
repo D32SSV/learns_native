@@ -22,6 +22,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useState } from "react";
 import Greet from "@/components/codevolution/Greet";
+import MultiStyleBox from "@/components/codevolution/MultiStyle";
 const logo = require("../../assets/images/adaptive-icon.png");
 
 export default function HomeScreen() {
@@ -128,7 +129,8 @@ export default function HomeScreen() {
     //   />
     // </View>
     <View style={{ flex: 1, backgroundColor: "green", padding: 60 }}>
-      <Greet name={"Bruce Bhai Banner"} />
+      {/* <Greet name={"Bruce Bhai Banner"} /> */}
+      <MultiStyleBox name1={"Superman"} name2={"IronMan"} />
     </View>
   );
 }
