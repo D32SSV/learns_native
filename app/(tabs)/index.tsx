@@ -128,7 +128,7 @@ export default function HomeScreen() {
     //   />
     // </View>
     <View style={{ flex: 1, backgroundColor: "green", padding: 60 }}>
-      <Greet name={"Brue Bhai"} />
+      <Greet name={"Bruce Bhai Banner"} />
     </View>
   );
 }
