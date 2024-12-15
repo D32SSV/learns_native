@@ -25,6 +25,7 @@ import Greet from "@/components/codevolution/Greet";
 import MultiStyleBox from "@/components/codevolution/MultiStyle";
 import Box from "@/components/codevolution/Box";
 import DimensionsAPI from "@/components/codevolution/DimensionsAPI";
+import UseWindowDim from "@/components/codevolution/UseWindowDim";
 const logo = require("../../assets/images/adaptive-icon.png");
 
 export default function HomeScreen() {
@@ -142,7 +143,8 @@ export default function HomeScreen() {
     //   <Box style={{ backgroundColor: "#faa555" }}>Box 7</Box>
     // </View>
     <View style={styles.container}>
-      <DimensionsAPI></DimensionsAPI>
+      {/* <DimensionsAPI></DimensionsAPI> */}
+      <UseWindowDim/>
     </View>
   );
 }
