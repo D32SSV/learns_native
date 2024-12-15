@@ -16,14 +16,12 @@ export const styles = StyleSheet.create({
   box: {
     backgroundColor: "lightblue",
     padding: 3,
-    height: windowHeight > 500 ? "70%" : "90%",
-    width: windowWidth > 500 ? "60%" : "90%",
     justifyContent: "center",
     alignItems: "center",
     alignContent: "center",
   },
   text: {
-    fontSize: windowHeight > 500 ? 45 : 85,
+    // fontSize: windowHeight > 500 ? 45 : 85,
     fontWeight: "bold",
     textAlign: "center",
     color: "crimson",
