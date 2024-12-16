@@ -14,6 +14,7 @@ import {
   StatusBar,
   ActivityIndicator,
   Alert,
+  SafeAreaView,
 } from "react-native";
 import { View } from "react-native";
 import { HelloWave } from "@/components/HelloWave";
@@ -27,10 +28,47 @@ import Box from "@/components/codevolution/Box";
 import DimensionsAPI from "@/components/codevolution/DimensionsAPI";
 import UseWindowDim from "@/components/codevolution/UseWindowDim";
 import SafeArea from "@/components/codevolution/SafeArea";
+import Pokemon from "@/components/codevolution/ExeciseOne/Pokemon";
 const logo = require("../../assets/images/adaptive-icon.png");
 
 export default function HomeScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const charmanderData = {
+    name: "Charmander",
+    image: require("../../assets/poke/charmander.png"),
+    type: "Fire",
+    hp: 39,
+    moves: ["Scratch", "Ember", "Growl", "Leer"],
+    weaknesses: ["Water", "Rock"],
+  };
+
+  const squirtleData = {
+    name: "Squirtle",
+    image: require("../../assets/poke/squirtle.png"), // Replace with the actual image path
+    type: "Water",
+    hp: 44,
+    moves: ["Tackle", "Water Gun", "Tail Whip", "Withdraw"],
+    weaknesses: ["Electric", "Grass"],
+  };
+
+  const bulbasaurData = {
+    name: "Bulbasaur",
+    image: require("../../assets/poke/bulbasaur.png"), // Replace with the actual image path
+    type: "Grass",
+    hp: 45,
+    moves: ["Tackle", "Vine Whip", "Growl", "Leech Seed"],
+    weaknesses: ["Fire", "Ice", "Flying", "Psychic"],
+  };
+
+  const pikachuData = {
+    name: "Pikachu",
+    image: require("../../assets/poke/pikachu.png"), // Replace with the actual image path
+    type: "Electric",
+    hp: 35,
+    moves: ["Quick Attack", "Thunderbolt", "Tail Whip", "Growl"],
+    weaknesses: ["Ground"],
+  };
+
   return (
     // <ParallaxScrollView
     //   headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -143,22 +181,24 @@ export default function HomeScreen() {
     //   <Box style={{ backgroundColor: "crimson" }}>Box 6</Box>
     //   <Box style={{ backgroundColor: "#faa555" }}>Box 7</Box>
     // </View>
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* <DimensionsAPI></DimensionsAPI> */}
       {/* <UseWindowDim/> */}
-      <SafeArea />
-    </View>
+      {/* <SafeArea /> */}
+      <ScrollView>
+        <Pokemon {...pikachuData} />
+        <Pokemon {...charmanderData} />
+        <Pokemon {...bulbasaurData} />
+        <Pokemon {...squirtleData} />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // marginTop: 64,
-    // borderWidth: 6,
-    // borderColor: "red",
-    backgroundColor: "plum",
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: "#5f5f5",
+    paddingTop: Platform.OS === "android" ? 25 : 0,
   },
 });
