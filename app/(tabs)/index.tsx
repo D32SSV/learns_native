@@ -15,6 +15,7 @@ import {
   ActivityIndicator,
   Alert,
   SafeAreaView,
+  FlatList,
 } from "react-native";
 import { View } from "react-native";
 import { HelloWave } from "@/components/HelloWave";
@@ -30,7 +31,7 @@ import UseWindowDim from "@/components/codevolution/UseWindowDim";
 import SafeArea from "@/components/codevolution/SafeArea";
 import Pokemon from "@/components/codevolution/ExeciseOne/Pokemon";
 const logo = require("../../assets/images/adaptive-icon.png");
-
+import data from "../../constants/data.json";
 export default function HomeScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const charmanderData = {
@@ -185,12 +186,23 @@ export default function HomeScreen() {
       {/* <DimensionsAPI></DimensionsAPI> */}
       {/* <UseWindowDim/> */}
       {/* <SafeArea /> */}
-      <ScrollView>
+      {/* <ScrollView>
         <Pokemon {...pikachuData} />
         <Pokemon {...charmanderData} />
         <Pokemon {...bulbasaurData} />
         <Pokemon {...squirtleData} />
-      </ScrollView>
+      </ScrollView> */}
+      <FlatList
+        data={data}
+        renderItem={({ item }) => {
+          return (
+            <View key={item.id}>
+              <Text>{item.name}</Text>
+              <Text>{item.type}</Text>
+            </View>
+          );
+        }}
+      />
     </SafeAreaView>
   );
 }
