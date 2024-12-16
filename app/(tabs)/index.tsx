@@ -193,7 +193,7 @@ export default function HomeScreen() {
         <Pokemon {...squirtleData} />
       </ScrollView> */}
       <FlatList
-        data={data}
+        data={data ? data : []}
         renderItem={({ item }) => {
           return (
             <View key={item.id}>
@@ -202,6 +202,10 @@ export default function HomeScreen() {
             </View>
           );
         }}
+        ItemSeparatorComponent={() => (
+          <View style={{ marginBottom: 20 }}></View>
+        )}
+        ListEmptyComponent={() => <Text>No Item Found</Text>}
       />
     </SafeAreaView>
   );
