@@ -32,6 +32,7 @@ import SafeArea from "@/components/codevolution/SafeArea";
 import Pokemon from "@/components/codevolution/ExeciseOne/Pokemon";
 const logo = require("../../assets/images/adaptive-icon.png");
 import data from "../../constants/data.json";
+import TextInputComp from "@/components/codevolution/TextInput/TextInput";
 export default function HomeScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const charmanderData = {
@@ -192,9 +193,11 @@ export default function HomeScreen() {
         <Pokemon {...bulbasaurData} />
         <Pokemon {...squirtleData} />
       </ScrollView> */}
-      <FlatList
+      {/* <FlatList
         data={data ? data : []}
         renderItem={({ item }) => {
+          // console.log(item.id);
+          
           return (
             <View key={item.id}>
               <Text>{item.name}</Text>
@@ -206,7 +209,8 @@ export default function HomeScreen() {
           <View style={{ marginBottom: 20 }}></View>
         )}
         ListEmptyComponent={() => <Text>No Item Found</Text>}
-      />
+      /> */}
+      <TextInputComp />
     </SafeAreaView>
   );
 }
