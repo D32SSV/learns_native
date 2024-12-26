@@ -6,18 +6,18 @@ import {
   Text,
   View,
   TextInput,
-  Switch
+  Switch,
 } from "react-native";
 
 export default function TextInputComp() {
-  const [name, setName] = useState("");
+  const [name, setName] = useState({ name: "", msg: "" });
   const [isDark, setIsDark] = useState(false);
   return (
     <SafeAreaView style={styles.container}>
       <TextInput
         style={styles.input}
-        value={name}
-        onChangeText={setName}
+        value={name.name}
+        onChangeText={(value) => setName((prev) => ({ ...prev, name: value }))}
         placeholder="tinnu beta"
         // placeholderTextColor={""}
         secureTextEntry
@@ -25,14 +25,23 @@ export default function TextInputComp() {
         autoCapitalize="words"
         // autoCorrect={false}
       />
-      <TextInput style={[styles.input, styles.multi]} placeholder="message min words 1000" multiline/>
-      <Text style={styles.title}>My name is ::{name} {isDark.toString()}</Text>
-      <Switch onChange={()=>{ 
-        setName("Ram Ram Bhagat")
-        setIsDark((prev)=>!prev)}} value={isDark}
+      <TextInput
+        style={[styles.input, styles.multi]}
+        placeholder="message min words 1000"
+        multiline
+        value={name.msg}
+        onChangeText={(value) => setName((prev) => ({ ...prev, msg: value }))}
+      />
+      <Text style={styles.title}>My name is ::{name.name}</Text>
+      <Switch
+        onChange={() => {
+          setIsDark((prev) => !prev);
+        }}
+        value={isDark}
         thumbColor={"red"}
-        trackColor={{false:"lime", true:"black"}}/>
-        
+        trackColor={{ false: "lime", true: "black" }}
+      />
+      <Text style={styles.title}>My msg is ::{name.msg}</Text>
     </SafeAreaView>
   );
 }
@@ -43,7 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: "smoke",
     paddingTop: StatusBar.currentHeight,
   },
-  multi: { minHeight: 100, textAlignVertical:"top" },
+  multi: { minHeight: 100, textAlignVertical: "top" },
   input: {
     height: 40,
     margin: 10,
