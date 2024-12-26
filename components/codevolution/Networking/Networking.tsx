@@ -14,10 +14,17 @@ import {
   ActivityIndicator,
 } from "react-native";
 
+
+
 export default function Networking() {
-  const [list, setList] = useState();
+  const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [postData, setPostData] = useState({
+    title: "",
+    body: "",
+    isPosting: false,
+  });
 
   const fetchData = async (limit = 10) => {
     const res = await fetch(
@@ -25,6 +32,21 @@ export default function Networking() {
     ).then((data) => data.json());
     setList(res);
     setIsLoading(false);
+  };
+  const handlePostData = async () => {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "post",
+      headers: {
+        "Content-Type": "applicatio/json",
+      },
+      body: JSON.stringify({
+        title: `${postData.title}`,
+        body: `${postData.body}`,
+      }),
+    });
+    const newRes = await response.json();
+    setList({ newRes, ...list });
+    setPostData({ title: "", body: "", isPosting: false });
   };
   const handleRefresh = () => {
     setRefreshing(true);
@@ -45,28 +67,61 @@ export default function Networking() {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.listContainer}>
-        <FlatList
-          data={list}
-          renderItem={({ item }) => {
-            return (
-              <View style={styles.card}>
-                <Text style={styles.nameText}>{item.id}</Text>
-                <Text style={styles.nameText}>{item.title}</Text>
-                <Text style={styles.nameText}>{item.body}</Text>
-              </View>
-            );
-          }}
-          ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-          ListEmptyComponent={() => <Text>No Data Found</Text>}
-          ListHeaderComponent={<Text style={styles.headerText}>Post List</Text>}
-          ListFooterComponent={
-            <Text style={styles.footerText}>End of List</Text>
-          }
-          refreshing={refreshing}
-          onRefresh={() => handleRefresh()}
-        />
-      </View>
+      <>
+        <View style={styles.inputContainer}>
+          <Text style={styles.nameText}>Title</Text>
+          <TextInput
+            placeholder="Enter title"
+            style={styles.input}
+            value={postData.title}
+            onChangeText={(value) =>
+              setPostData((prev) => ({ ...prev, title: value }))
+            }
+          />
+          <Text style={styles.nameText}>Body</Text>
+          <TextInput
+            placeholder="Enter Body"
+            style={styles.input}
+            value={postData.body}
+            onChangeText={(value) =>
+              setPostData((prev) => ({ ...prev, body: value }))
+            }
+          />
+          <Button
+            disabled={postData.isPosting}
+            title={postData.isPosting ? "Posting..." : "Post Data"}
+            onPress={() => {
+              setPostData((prev) => ({ ...prev, isPosting: true }));
+              handlePostData();
+            }}
+          />
+        </View>
+
+        <View style={styles.listContainer}>
+          <FlatList
+            data={list}
+            renderItem={({ item }) => {
+              return (
+                <View style={styles.card}>
+                  <Text style={styles.nameText}>{item.id}</Text>
+                  <Text style={styles.nameText}>{item.title}</Text>
+                  <Text style={styles.nameText}>{item.body}</Text>
+                </View>
+              );
+            }}
+            ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+            ListEmptyComponent={() => <Text>No Data Found</Text>}
+            ListHeaderComponent={
+              <Text style={styles.headerText}>Post List</Text>
+            }
+            ListFooterComponent={
+              <Text style={styles.footerText}>End of List</Text>
+            }
+            refreshing={refreshing}
+            onRefresh={() => handleRefresh()}
+          />
+        </View>
+      </>
     </SafeAreaView>
   );
 }
