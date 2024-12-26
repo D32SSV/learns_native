@@ -34,6 +34,7 @@ const logo = require("../../assets/images/adaptive-icon.png");
 import data from "../../constants/data.json";
 import TextInputComp from "@/components/codevolution/TextInput/TextInput";
 import LoginForm from "@/components/codevolution/LoginForm/LoginForm";
+import Networking from "@/components/codevolution/Networking/Networking";
 export default function HomeScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const charmanderData = {
@@ -212,7 +213,8 @@ export default function HomeScreen() {
         ListEmptyComponent={() => <Text>No Item Found</Text>}
       /> */}
       {/* <TextInputComp /> */}
-      <LoginForm />
+      {/* <LoginForm /> */}
+      <Networking />
     </SafeAreaView>
   );
 }
