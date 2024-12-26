@@ -11,19 +11,32 @@ import {
   Platform,
   StatusBar,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 
 export default function Networking() {
   const [list, setList] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
   const fetchData = async (limit = 10) => {
     const res = await fetch(
       `https://jsonplaceholder.typicode.com/posts?_limit=${limit}`
     ).then((data) => data.json());
     setList(res);
+    // setIsLoading(false);
   };
   useEffect(() => {
     fetchData();
   }, []);
+
+  if (isLoading) {
+    return (
+      <SafeAreaView style={styles.loadingContainer}>
+        <ActivityIndicator size={"large"} color={"green"} />
+        <Text style={styles.nameText}>Fetching Data...</Text>
+      </SafeAreaView>
+    );
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.listContainer}>
@@ -52,12 +65,12 @@ export default function Networking() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#333333",
     paddingTop: StatusBar.currentHeight,
   },
   loadingContainer: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#333333",
     paddingTop: StatusBar.currentHeight,
     justifyContent: "center", // Center the loading spinner
     alignItems: "center", // Center the loading spinner
