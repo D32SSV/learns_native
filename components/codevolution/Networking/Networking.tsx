@@ -17,13 +17,19 @@ import {
 export default function Networking() {
   const [list, setList] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchData = async (limit = 10) => {
     const res = await fetch(
       `https://jsonplaceholder.typicode.com/posts?_limit=${limit}`
     ).then((data) => data.json());
     setList(res);
-    // setIsLoading(false);
+    setIsLoading(false);
+  };
+  const handleRefresh = () => {
+    setRefreshing(true);
+    fetchData(20);
+    setRefreshing(false);
   };
   useEffect(() => {
     fetchData();
@@ -45,6 +51,7 @@ export default function Networking() {
           renderItem={({ item }) => {
             return (
               <View style={styles.card}>
+                <Text style={styles.nameText}>{item.id}</Text>
                 <Text style={styles.nameText}>{item.title}</Text>
                 <Text style={styles.nameText}>{item.body}</Text>
               </View>
@@ -56,6 +63,8 @@ export default function Networking() {
           ListFooterComponent={
             <Text style={styles.footerText}>End of List</Text>
           }
+          refreshing={refreshing}
+          onRefresh={() => handleRefresh()}
         />
       </View>
     </SafeAreaView>
