@@ -13,6 +13,23 @@ import {
 
 export default function LoginForm() {
   const [credential, setCredential] = useState({ username: "", password: "" });
+  const [err, setErr] = useState({ msg: "" });
+
+  const validateFormData = () => {
+    let err = {};
+    if (!credential.username || !credential.password) {
+      err.msg = "All Fields are required";
+    }
+    setErr(err);
+    return Object.keys(err).length === 0;
+  };
+  const handleSubmit = () => {
+    if (validateFormData()) {
+      console.log("submitted, credentials: ", credential);
+      setCredential({ username: "", password: "" });
+      setErr({ msg: "" });
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -43,7 +60,13 @@ export default function LoginForm() {
               setCredential((prev) => ({ ...prev, password: value }))
             }
           />
-          <Button title="Submit" onPress={() => {}} />
+          {err.msg ? <Text style={styles.err}>{err.msg}</Text> : null}
+          <Button
+            title="Submit"
+            onPress={() => {
+              handleSubmit();
+            }}
+          />
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -57,6 +80,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: "violet",
   },
+  err: { color: "red", marginBottom: 10 },
   img: {
     marginBottom: 20,
     height: 80,
