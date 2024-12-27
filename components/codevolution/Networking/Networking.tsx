@@ -14,8 +14,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 
-
-
 export default function Networking() {
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,28 +23,50 @@ export default function Networking() {
     body: "",
     isPosting: false,
   });
+  const [error, setError] = useState("");
 
   const fetchData = async (limit = 10) => {
-    const res = await fetch(
-      `https://jsonplaceholder.typicode.com/posts?_limit=${limit}`
-    ).then((data) => data.json());
-    setList(res);
-    setIsLoading(false);
+    try {
+      const res = await fetch(
+        `https://jsonplaceholder.typicode.com/posts?_limit=${limit}`
+      ).then((data) => data.json());
+      console.log("Response from Fetch >>> ", res);
+
+      setList(res);
+      setIsLoading(false);
+      setError("");
+    } catch (error) {
+      console.error("ERROR FROM FETCH >>>> ", error);
+      setIsLoading(false);
+      setError("Error in fetching data");
+    }
   };
   const handlePostData = async () => {
-    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
-      method: "post",
-      headers: {
-        "Content-Type": "applicatio/json",
-      },
-      body: JSON.stringify({
-        title: `${postData.title}`,
-        body: `${postData.body}`,
-      }),
-    });
-    const newRes = await response.json();
-    setList({ newRes, ...list });
-    setPostData({ title: "", body: "", isPosting: false });
+    setPostData((prev) => ({ ...prev, isPosting: true }));
+    try {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: `${postData.title}`,
+            body: `${postData.body}`,
+          }),
+        }
+      );
+      const newRes = await response.json();
+      console.log("Response from PSOTPOST >>> ", postData.title);
+      setList([newRes, ...list]);
+      setPostData({ title: "", body: "", isPosting: false });
+      setError("");
+    } catch (error) {
+      console.error("LOG FROM POST>>> ", error);
+      setPostData((prev) => ({ ...prev, isPosting: false }));
+      setError("Error in handling post data");
+    }
   };
   const handleRefresh = () => {
     setRefreshing(true);
@@ -67,61 +87,64 @@ export default function Networking() {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <>
-        <View style={styles.inputContainer}>
-          <Text style={styles.nameText}>Title</Text>
-          <TextInput
-            placeholder="Enter title"
-            style={styles.input}
-            value={postData.title}
-            onChangeText={(value) =>
-              setPostData((prev) => ({ ...prev, title: value }))
-            }
-          />
-          <Text style={styles.nameText}>Body</Text>
-          <TextInput
-            placeholder="Enter Body"
-            style={styles.input}
-            value={postData.body}
-            onChangeText={(value) =>
-              setPostData((prev) => ({ ...prev, body: value }))
-            }
-          />
-          <Button
-            disabled={postData.isPosting}
-            title={postData.isPosting ? "Posting..." : "Post Data"}
-            onPress={() => {
-              setPostData((prev) => ({ ...prev, isPosting: true }));
-              handlePostData();
-            }}
-          />
+      {error ? (
+        <View style={styles.errorContainer}>
+          <Text style={[styles.errorText]}>{error}</Text>
         </View>
+      ) : (
+        <>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Enter title"
+              style={styles.input}
+              value={postData.title}
+              onChangeText={(value) =>
+                setPostData((prev) => ({ ...prev, title: value }))
+              }
+            />
+            <TextInput
+              placeholder="Enter Body"
+              style={styles.input}
+              value={postData.body}
+              onChangeText={(value) =>
+                setPostData((prev) => ({ ...prev, body: value }))
+              }
+            />
+            <Button
+              disabled={postData.isPosting}
+              title={postData.isPosting ? "Posting..." : "Post Data"}
+              onPress={() => {
+                handlePostData();
+              }}
+            />
+          </View>
 
-        <View style={styles.listContainer}>
-          <FlatList
-            data={list}
-            renderItem={({ item }) => {
-              return (
-                <View style={styles.card}>
-                  <Text style={styles.nameText}>{item.id}</Text>
-                  <Text style={styles.nameText}>{item.title}</Text>
-                  <Text style={styles.nameText}>{item.body}</Text>
-                </View>
-              );
-            }}
-            ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-            ListEmptyComponent={() => <Text>No Data Found</Text>}
-            ListHeaderComponent={
-              <Text style={styles.headerText}>Post List</Text>
-            }
-            ListFooterComponent={
-              <Text style={styles.footerText}>End of List</Text>
-            }
-            refreshing={refreshing}
-            onRefresh={() => handleRefresh()}
-          />
-        </View>
-      </>
+          <View style={styles.listContainer}>
+            <FlatList
+              data={list}
+              renderItem={({ item }) => {
+                return (
+                  <View style={styles.card}>
+                    <Text style={styles.nameText}>{item.id}</Text>
+                    <Text style={styles.nameText}>{item.title}</Text>
+                    <Text style={styles.nameText}>{item.body}</Text>
+                  </View>
+                );
+              }}
+              ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+              ListEmptyComponent={() => <Text>No Data Found</Text>}
+              ListHeaderComponent={
+                <Text style={styles.headerText}>Post List</Text>
+              }
+              ListFooterComponent={
+                <Text style={styles.footerText}>End of List</Text>
+              }
+              refreshing={refreshing}
+              onRefresh={() => handleRefresh()}
+            />
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 }
